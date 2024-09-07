@@ -3,12 +3,14 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"time"
+
+	"github.com/G-shiy/MonitorService/internal/config"
 )
 
 func main() {
-	now, url := config()
+
+	now, url := config.Init()
 	get, err := http.Get(url)
 
 	if err != nil {
@@ -21,12 +23,4 @@ func main() {
 	fmt.Println("Time: ", elapsedTime, "ms", "Status Code: ", statusCodes)
 
 	defer get.Body.Close()
-
-}
-
-func config() (time.Time, string) {
-	now := time.Now()
-	url := os.Args[1]
-
-	return now, url
 }
